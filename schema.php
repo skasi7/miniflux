@@ -3,6 +3,11 @@
 namespace Schema;
 
 
+function version_18($pdo)
+{
+    $pdo->exec('ALTER TABLE config ADD COLUMN showhistory INTEGER DEFAULT 0');
+}
+
 function version_17($pdo)
 {
     $pdo->exec('ALTER TABLE config ADD COLUMN items_sorting_direction TEXT DEFAULT "desc"');

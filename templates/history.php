@@ -9,6 +9,10 @@
         </ul>
     </div>
 
+    <?php if ($nothing_to_read): ?>
+        <p class="alert"><?= t('Nothing to read, do you want to <a href="?action=refresh-all" data-action="refresh-all">update your subscriptions?</a>') ?></p>
+    <?php endif ?>
+
     <section class="items" id="listing">
         <?php foreach ($items as $item): ?>
             <?= \PicoTools\Template\load('item', array('item' => $item, 'menu' => $menu, 'offset' => $offset, 'hide' => true)) ?>

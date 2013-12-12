@@ -276,7 +276,8 @@ Router\get_action('history', function() {
         'offset' => $offset,
         'items_per_page' => Model\get_config_value('items_per_page'),
         'menu' => 'history',
-        'title' => t('History').' ('.$nb_items.')'
+        'title' => t('History').' ('.$nb_items.')',
+        'nothing_to_read' => Request\int_param('nothing_to_read')
     )));
 });
 
@@ -724,7 +725,7 @@ Router\get_action('config', function() {
 // Update preferences
 Router\post_action('config', function() {
 
-    $values = Request\values() + array('nocontent' => 0);
+    $values = Request\values() + array('nocontent' => 0, 'showhistory' => 0);
     list($valid, $errors) = Model\validate_config_update($values);
 
     if ($valid) {
@@ -876,7 +877,14 @@ Router\notfound(function() {
     $items = Model\get_items('unread', $offset, Model\get_config_value('items_per_page'), $order, $direction);
     $nb_items = Model\count_items('unread');
 
-    if ($nb_items === 0) Response\redirect('?action=feeds&nothing_to_read=1');
+    if ($nb_items === 0) {
+        if (Model\get_config_value('showhistory') === 0) {
+            Response\redirect('?action=feeds&nothing_to_read=1');
+        }
+        else {
+            Response\redirect('?action=history&nothing_to_read=1');
+        }
+    }
 
     Response\html(Template\layout('unread_items', array(
         'order' => $order,
