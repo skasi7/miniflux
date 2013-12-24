@@ -31,7 +31,8 @@
     <?= Helper\form_label(t('Theme'), 'theme') ?>
     <?= Helper\form_select('theme', $theme_options, $values, $errors) ?><br/>
 
-    <?= Helper\form_checkbox('nocontent', t('Do not fetch the content of articles'), 1, isset($values['nocontent']) ? $values['nocontent'] : false) ?><br />
+    <?= Helper\form_checkbox('nocontent', t('Do not fetch the content of articles'), 1, isset($values['nocontent']) ? $values['nocontent'] : false) ?>
+    <?= Helper\form_checkbox('showhistory', t('Show history when there\'s nothing to read'), 1, isset($values['showhistory']) ? $values['showhistory'] : false) ?><br />
 
     <ul>
         <li>
